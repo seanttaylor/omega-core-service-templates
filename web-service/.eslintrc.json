@@ -1,0 +1,17 @@
+{
+  "env": {
+    "commonjs": true
+  },
+  "extends": [
+    "airbnb-base"
+  ],
+  "rules": {
+      
+  },
+  "overrides": [{
+    "files": ["*.test.js", "jest.config.js", "testing.setup.js"],
+    "rules": {
+        
+    }
+  }]
+}
