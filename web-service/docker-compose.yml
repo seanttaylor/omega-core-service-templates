@@ -1,7 +1,7 @@
 version: "3.5"
 
 services: 
-  {{@root.swagger.info.x-snc-template-config.docker.image-name}}:
+  {{@root.swagger.info.x-snc-template-config.docker.service-name}}:
     env_file:
       - ./.env-template
     build:

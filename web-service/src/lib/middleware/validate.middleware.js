@@ -7,10 +7,7 @@ module.exports = function(schema) {
     return function validateRequest(req, res, next) {
         const validation = validate(req.body);
         if (!validation) {
-          throw new ServerError({
-            status: 400,
-            error: validate.errors[0]
-          });
+          res.status(400).send({error: validate.errors[0]})
         }
         next();
     }

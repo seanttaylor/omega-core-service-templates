@@ -18,8 +18,7 @@ module.exports = function(action, resource) {
             };
             
             if (!permission.granted) {
-                throw new ServerError({
-                    status: 403,
+                res.status(403).send({
                     error: 'Missing or invalid access grant(s).'
                 });
             }
@@ -30,8 +29,7 @@ module.exports = function(action, resource) {
             }
             //The request is for a record whose id matches the subject claim on the authorization token.
             if (req.params.id && req.params.id !== decodedToken.sub) {
-                throw new ServerError({
-                    status: 403,
+                res.status(403).send({
                     error: 'Access denied.'
                 });
             }
@@ -39,9 +37,8 @@ module.exports = function(action, resource) {
             
         } catch(e) {
             console.error(e);
-            throw new ServerError({
-                status: e.status || 401,
-                error: e.error || 'Missing or bad authorization.'
+             res.status(401).send({
+                error: 'Missing or bad authorization.'
             });
         }
     }

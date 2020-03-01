@@ -1,0 +1,6 @@
+{
+    "__comments": "Access grants for mediating access to API resources via the accesscontrol package. (https://www.npmjs.com/package/accesscontrol)",
+    "grants": {
+      
+    }
+}
