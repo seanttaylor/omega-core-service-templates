@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+const requestContext = require('../lib/middleware/request-context.middleware.js');
 const app = express();
 const serverPort = process.env.SERVER_PORT || 8080;
 

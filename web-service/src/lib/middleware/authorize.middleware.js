@@ -10,7 +10,13 @@ module.exports = function(action, resource) {
             const authToken = req.headers.authorization.split(" ")[1];
             const decodedToken = jwt.decode(authToken);
             const permission = ac.can(decodedToken.role[0])[action](resource);
-            console.log(permission.granted);
+
+            res.locals.CONTEXT.permissions = {
+                filter: function(data) {
+                    return permission.filter(data);
+                }
+            };
+            
             if (!permission.granted) {
                 throw new ServerError({
                     status: 403,
@@ -29,7 +35,6 @@ module.exports = function(action, resource) {
                     error: 'Access denied.'
                 });
             }
-            
             next();
             
         } catch(e) {
