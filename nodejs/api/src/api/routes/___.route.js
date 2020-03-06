@@ -1,7 +1,7 @@
 const express = require('express');
-const validateRequestBySchema = require('../../lib/middleware/validate.middleware.js');
 const schema = require('../schemas/{{operation_name}}.schema.json');
 const {{camelCase operation_name}} = require('../services/{{operation_name}}.service.js');
+//const validateRequestBySchema = require('../../lib/middleware/validate.middleware.js');
 
 const router = new express.Router();
 //Applied to all routes by default. Use the validateRequestBySchema middleware to validate incoming [POST] and [PUT] requests where appropriate.

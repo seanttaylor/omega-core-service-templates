@@ -1,0 +1,3 @@
+{
+    "__comments": "Included for out-of-box use with the omega-repo-json npm package. Define data collections as top-level properties on this object to get up and runnning."
+}

@@ -1,0 +1,401 @@
+openapi: 3.0.1
+info:
+  title: Beer Service
+  description: 'API service used for testing experimental backend architectures.'
+  termsOfService: http://omega.io/terms/
+  contact:
+    email: apiteam@omega.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+  x-snc-template-config:
+    docker: 
+      image-name: beer-service
+    service:
+      name: beer-service
+externalDocs:
+  description: Find out more about Beer Service.
+  url: http://omgea.io./docs
+servers:
+- url: https://beerservice.omega.io/v2
+- url: http://beerservice.omega.io/v2
+tags:
+- name: Beers
+  description: Endpoints for accessing Beer business services.
+  externalDocs:
+    description: Find out more about our store
+    url: http://omega.io/docs/beer-service
+paths:
+  /beers:
+    post:
+      tags:
+      - Beers
+      summary: Create new beer.
+      operationId: createBeer
+      requestBody:
+        description: New beer document to add to the data store.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Beer'
+        required: true
+      responses:
+        405:
+          description: Method not allowed.
+          content: {}
+      security:
+      - beerservice_auth:
+        - create:any
+        - create:own
+      x-codegen-request-body-name: body
+    get:
+      tags:
+      - Beers
+      summary: Get all beer documents from the data store.
+      description: Get all beer documents from the data store.
+      operationId: getAllBeers
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beer'
+        400:
+          description: Bad request
+          content: {}
+      security:
+      - beerservice_auth:
+        - read:any
+        - read:own  
+  /beers/{id}:
+    put:
+      tags:
+      - Beers
+      summary: Update an existing beer.
+      operationId: updateBeer
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier for a single beer document.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Document update for a beer that already exists in the data store.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Beer'
+        required: true
+      responses:
+        400:
+          description: Bad request
+          content: {}
+        404:
+          description: Not found
+          content: {}
+        405:
+          description: Method not allowed
+          content: {}
+      security:
+      - beerservice_auth:
+        - update:any
+        - update:own
+      x-codegen-request-body-name: body
+    get:
+      tags:
+      - Beers
+      summary: Find a single beer by UUID.
+      description: Find a single beer document by its UUID.
+      operationId: findBeerById
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier for a single beer document.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beer'
+        400:
+          description: Bad request
+          content: {}
+      security:
+      - beerservice_auth:
+        - read:any
+        - read:own
+    delete:
+      tags:
+      - Beers
+      summary: Delete an existing beer.
+      operationId: deleteBeer
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier for a single beer document.
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          description: Bad request
+          content: {}
+        404:
+          description: Not found
+          content: {}
+        405:
+          description: Method not allowed
+          content: {}
+      security:
+      - beerservice_auth:
+        - delete:any
+      x-codegen-request-body-name: body
+  /users:
+    post:
+      tags:
+      - Users
+      summary: Create new user.
+      operationId: createUser
+      requestBody:
+        description: New user document to add to the data store.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        405:
+          description: Method not allowed.
+          content: {}
+      security:
+      - beerservice_auth:
+        - create:any
+        - create:own
+      x-codegen-request-body-name: body
+    get:
+      tags:
+      - Users
+      summary: Get all user documents from the data store.
+      description: Get all user documents from the data store.
+      operationId: getAllUsers
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+          content: {}
+      security:
+      - beerservice_auth:
+        - read:any
+        - read:own  
+  /users/{id}:
+    put:
+      tags:
+      - Users
+      summary: Update an existing user.
+      operationId: updateUser
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier for a single user document.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Document update for a user that already exists in the data store.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        400:
+          description: Bad request
+          content: {}
+        404:
+          description: Not found
+          content: {}
+        405:
+          description: Method not allowed
+          content: {}
+      security:
+      - beerservice_auth:
+        - update:any
+        - update:own
+      x-codegen-request-body-name: body
+    get:
+      tags:
+      - Users
+      summary: Find a single user by UUID.
+      description: Find a single user document by its UUID.
+      operationId: findUserById
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier for a single user document.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beer'
+        400:
+          description: Bad request
+          content: {}
+      security:
+      - beerservice_auth:
+        - read:any
+        - read:own
+    delete:
+      tags:
+      - Users
+      summary: Delete an existing user.
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier for a single beer document.
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          description: Bad request
+          content: {}
+        404:
+          description: Not found
+          content: {}
+        405:
+          description: Method not allowed
+          content: {}
+      security:
+      - beerservice_auth:
+        - delete:any
+      x-codegen-request-body-name: body
+  /token:
+    post:
+      tags:
+      - Token
+      summary: Create new authentication token.
+      operationId: createToken
+      requestBody:
+        description: Create a new authentication token for authorizing API requests.
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: tstart@avengers.io
+                password:
+                  type: string
+                  example: te$$er@ct
+        required: true
+      responses:
+        200:
+          $ref: '#/components/schemas/Token'
+        500:
+          description: Server Error
+          content: {}
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    Beer:
+      required:
+      - name
+      - kind
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          example: '5dcae1b4c5459371c20c0778'
+        kind:
+          type: string
+          example: ale
+        name:
+          type: string
+          example: Indiana Pale Ale
+    User:
+      required:
+      - email
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          example: '5dcae1b4c5459371c20c0778'
+        _createdAt:
+          type: string
+          example: '2020-02-25T16:10:32.000Z'
+        _updatedAt:
+          type: string
+          example: '2020-02-25T16:41:19.000Z'
+        email:
+          type: string
+          example: tstark@avengers.io
+        imageUrl: 
+          type: string
+          example: 'https://placehold.it/400x400'
+        name:
+          type: string
+          example: Tony Stark
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRvbnkgU3RhcmsiLCJlbWFpbCI6InRzdGFya0BhdmVuZ2Vycy5pbyIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNTE2MjM5MDIyfQ.gHUYnvTqprQxuUpU0rgyfXMe8TFouokoFX8Lc_rAt-U
+  securitySchemes:
+    beerservice_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://petstore.swagger.io/oauth/dialog
+          scopes:
+            write:beers: modify beers in your account
+            read:beers: read your beers
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

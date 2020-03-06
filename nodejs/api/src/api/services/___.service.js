@@ -1,6 +1,13 @@
 const ServerError = require('../../lib/error.lib');
-//Optionally include any of the omega repository implementations here.
-//const Repository = require('omega-package-here');
+/*
+ * JSON file-based data repository included here for the out-of-box-experience. 
+ * Configure persistence solution accordingly.
+*/
+const Repository = require('omega-repo-json')({
+  datasourceConfig: {
+    filePath: `${__dirname}/data.json`
+  }
+});
 
 {{#each operation}}
   {{#each this.path}}

@@ -4,6 +4,15 @@ const AccessControl = require('accesscontrol');
 const jwt = require('jsonwebtoken');
 const ac = new AccessControl(accessGrants.grants);
 
+/**
+ * Authorizes an incoming request against the 'roles' claim in a JWT.
+ * @param {String} action - The action being taken against the resource per the 'access-control' package API specification.
+ * @param {String} resource - The API resource requiring authorization.
+ * @param {Function} next - Express 'next' function.
+ * @returns {Function} - function with Express middleware signature.
+ * 
+*/
+
 module.exports = function(action, resource) { 
     return function authorizeRequest(req, res, next) {
         try {
