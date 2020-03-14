@@ -1,6 +1,6 @@
 FROM hashicorp/terraform:light
 
-COPY ./tf /tf
+COPY ./ /
 
 RUN terraform init /tf
 

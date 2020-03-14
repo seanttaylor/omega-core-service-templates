@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: Beer Service
+  title: Simple Microblog Service
   description: 'API service used for testing experimental backend architectures.'
   termsOfService: http://omega.io/terms/
   contact:
@@ -11,50 +11,50 @@ info:
   version: 1.0.0
   x-snc-template-config:
     docker: 
-      image-name: beer-service
+      image-name: microblog-service
     service:
-      name: beer-service
+      name: microblog-service
 externalDocs:
   description: Find out more about Beer Service.
   url: http://omgea.io./docs
 servers:
-- url: https://beerservice.omega.io/v2
-- url: http://beerservice.omega.io/v2
+- url: https://microblog.omega.io/v2
+- url: http://microblog.omega.io/v2
 tags:
-- name: Beers
-  description: Endpoints for accessing Beer business services.
+- name: Posts
+  description: Endpoints for accessing Posts business services.
   externalDocs:
     description: Find out more about our store
-    url: http://omega.io/docs/beer-service
+    url: http://omega.io/docs/microblog-service
 paths:
-  /beers:
+  /posts:
     post:
       tags:
-      - Beers
-      summary: Create new beer.
-      operationId: createBeer
+      - Posts
+      summary: Create new post.
+      operationId: createPost
       requestBody:
-        description: New beer document to add to the data store.
+        description: New post document to add to the data store.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Beer'
+              $ref: '#/components/schemas/Post'
         required: true
       responses:
         405:
           description: Method not allowed.
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - create:any
         - create:own
       x-codegen-request-body-name: body
     get:
       tags:
-      - Beers
-      summary: Get all beer documents from the data store.
-      description: Get all beer documents from the data store.
-      operationId: getAllBeers
+      - Posts
+      summary: Get all post documents from the data store.
+      description: Get all post documents from the data store.
+      operationId: getAllPosts
       responses:
         200:
           description: OK
@@ -63,33 +63,33 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Beer'
+                  $ref: '#/components/schemas/Post'
         400:
           description: Bad request
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - read:any
         - read:own  
-  /beers/{id}:
+  /posts/{id}:
     put:
       tags:
-      - Beers
-      summary: Update an existing beer.
-      operationId: updateBeer
+      - Posts
+      summary: Update an existing post.
+      operationId: updatePost
       parameters:
       - name: id
         in: path
-        description: Unique identifier for a single beer document.
+        description: Unique identifier for a single post document.
         required: true
         schema:
           type: string
       requestBody:
-        description: Document update for a beer that already exists in the data store.
+        description: Document update for a post that already exists in the data store.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Beer'
+              $ref: '#/components/schemas/Post'
         required: true
       responses:
         400:
@@ -102,20 +102,20 @@ paths:
           description: Method not allowed
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - update:any
         - update:own
       x-codegen-request-body-name: body
     get:
       tags:
-      - Beers
-      summary: Find a single beer by UUID.
-      description: Find a single beer document by its UUID.
-      operationId: findBeerById
+      - Posts
+      summary: Find a single post by UUID.
+      description: Find a single post document by its UUID.
+      operationId: findPostById
       parameters:
       - name: id
         in: path
-        description: Unique identifier for a single beer document.
+        description: Unique identifier for a single post document.
         required: true
         schema:
           type: string
@@ -127,23 +127,23 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Beer'
+                  $ref: '#/components/schemas/Post'
         400:
           description: Bad request
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - read:any
         - read:own
     delete:
       tags:
-      - Beers
-      summary: Delete an existing beer.
-      operationId: deleteBeer
+      - Posts
+      summary: Delete an existing post.
+      operationId: deletePost
       parameters:
       - name: id
         in: path
-        description: Unique identifier for a single beer document.
+        description: Unique identifier for a single post document.
         required: true
         schema:
           type: string
@@ -158,7 +158,7 @@ paths:
           description: Method not allowed
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - delete:any
       x-codegen-request-body-name: body
   /users:
@@ -179,7 +179,7 @@ paths:
           description: Method not allowed.
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - create:any
         - create:own
       x-codegen-request-body-name: body
@@ -202,7 +202,7 @@ paths:
           description: Bad request
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - read:any
         - read:own  
   /users/{id}:
@@ -236,7 +236,7 @@ paths:
           description: Method not allowed
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - update:any
         - update:own
       x-codegen-request-body-name: body
@@ -261,12 +261,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Beer'
+                  $ref: '#/components/schemas/Post'
         400:
           description: Bad request
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - read:any
         - read:own
     delete:
@@ -292,7 +292,7 @@ paths:
           description: Method not allowed
           content: {}
       security:
-      - beerservice_auth:
+      - microblogservice_auth:
         - delete:any
       x-codegen-request-body-name: body
   /token:
@@ -327,10 +327,9 @@ paths:
       x-codegen-request-body-name: body
 components:
   schemas:
-    Beer:
+    Post:
       required:
-      - name
-      - kind
+      - body
       type: object
       properties:
         id:
@@ -338,12 +337,9 @@ components:
           format: uuid
           readOnly: true
           example: '5dcae1b4c5459371c20c0778'
-        kind:
+        body:
           type: string
-          example: ale
-        name:
-          type: string
-          example: Indiana Pale Ale
+          example: The quick brown fox jumps over the lazy dog.
     User:
       required:
       - email
@@ -387,7 +383,7 @@ components:
           type: string
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRvbnkgU3RhcmsiLCJlbWFpbCI6InRzdGFya0BhdmVuZ2Vycy5pbyIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNTE2MjM5MDIyfQ.gHUYnvTqprQxuUpU0rgyfXMe8TFouokoFX8Lc_rAt-U
   securitySchemes:
-    beerservice_auth:
+    microblogservice_auth:
       type: oauth2
       flows:
         implicit:

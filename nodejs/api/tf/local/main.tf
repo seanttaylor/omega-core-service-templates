@@ -1,4 +1,4 @@
-# main.tf
+# USE THIS FILE FOR BOOTSTRAPPING DEV INFRASTRUCTURE VIA LOCAL STACK.
 provider "aws" {
     access_key                  = "mock_access_key"
     region                      = "us-east-1"

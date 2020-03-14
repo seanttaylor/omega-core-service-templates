@@ -18,3 +18,24 @@ We save developer time by reducing the effort required to scaffold a project. Ge
 Prototyping quickly and delivering features are critical functions of engineering teams. Providing the ability to experiment and validate ideas is among the most important value propositions of a software developers within an organization.
 
 Allowing developers to stamp out code, prototypes and features means time savings, money savings and the most valuable direction of technical resources possible.
+
+
+### Getting Started 
+
+A critical component of the Omega Framework is the [`swagger-node-codegen`](https://www.npmjs.com/package/swagger-node-codegen) package. Ensure that you have this package installed as it provides the actual code generation mechanism.
+
+To generate project scaffolding do:
+
+1. `$snc [_./path/to/swagger/specification.yaml_] -o [_./path/to/output/directory_] -t [_./path/to/template/folder_]`
+
+##### Notes
+
+In addition to the below, more documentation is available in the `swagger-node-codegen` documentation.
+
+* Only the path to the specification file is required in order to generate scaffolding.
+* Specification file may be in *.yaml or *.json format
+* If NO output directory is specified, code is output to the current directory.
+* If NO template directory is specified, code will be output using the default template provided by the `swagger-node-codegen` package.
+
+
+
