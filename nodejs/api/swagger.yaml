@@ -9,7 +9,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
-  x-snc-template-config:
+  x-application-config:
     docker: 
       image-name: microblog-service
     service:

@@ -1,7 +1,7 @@
 version: "3.5"
 
 services: 
-  {{@root.swagger.info.x-snc-template-config.service.name}}:
+  {{@root.swagger.info.x-application-config.service.name}}:
     env_file:
       - ./.env-template
   #  depends_on:

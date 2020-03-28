@@ -3,7 +3,7 @@ const ServerError = require('../../lib/error.lib');
  * JSON file-based data repository included here for the out-of-box-experience. 
  * Configure persistence solution accordingly.
 */
-const Repository = require('@omegalabs/repo-json')({
+const Repository = require('omega-repo-json')({
   datasourceConfig: {
     filePath: `${__dirname}/data.json`
   }
