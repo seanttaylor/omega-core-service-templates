@@ -16,6 +16,9 @@ jobs:
       - name: "[STEP] Install dependencies"
         id: npm-install
         run: npm install
+      - name: "[STEP] Audit dependencies"
+        id: npm-audit
+        run: npm audit
       - name: "[STEP] Configure AWS Credentials"
         id: configure-credentials
         # Replace {SERVICE_NAME_HERE} with the application namespace in the Github repository secrets panel.
