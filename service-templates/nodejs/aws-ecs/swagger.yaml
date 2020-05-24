@@ -16,7 +16,7 @@ info:
       ecr-repository-name: my-microblog-service
       ecs-service-name: api-my-microblog-service
 externalDocs:
-  description: Find out more about Simple Micrblog Service
+  description: Find out more about Simple Microblog Service
   url: http://omgea.io./docs
 servers:
   - url: https://microblog.omega.io/v2
