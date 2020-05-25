@@ -1,11 +1,11 @@
 version: "3.5"
 
-services: 
-  {{@root.swagger.info.x-application-config.service.name}}:
+services:
+  {{@root.swagger.info.x-application-config.docker.service-name }}:
     env_file:
       - ./.env-template
-  #  depends_on:
-  #    - localstack
+    #  depends_on:
+    #    - localstack
     build:
       context: .
       args:
@@ -35,4 +35,3 @@ services:
 networks:
   shared_network:
     name: "shared"
-

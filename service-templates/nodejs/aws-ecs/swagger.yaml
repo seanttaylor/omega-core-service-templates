@@ -1,35 +1,41 @@
 openapi: 3.0.1
 info:
   title: Simple Microblog Service
-  description: "API service used for testing experimental backend architectures."
-  termsOfService: http://omega.io/terms/
+  description: API service used for testing experimental backend architectures.
+  termsOfService: "http://omega.io/terms/"
   contact:
     email: apiteam@omega.io
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
   version: 1.0.0
   x-application-config:
     docker:
-      service-name: microblog-service-backend
+      service-name: smbs-backend
     aws:
-      ecr-repository-name: my-microblog-service
-      ecs-service-name: api-my-microblog-service
+      ecr-repository-name: simple-microblog-service
+      ecs-service-name: api-simple-microblog-service
+      ecs-service-slug: api-smbs
 externalDocs:
   description: Find out more about Simple Microblog Service
-  url: http://omgea.io./docs
+  url: "http://omgea.io./docs"
 servers:
-  - url: https://microblog.omega.io/v2
-  - url: http://microblog.omega.io/v2
+  - url: "https://microblog.omegalabs.io/v2"
+  - url: "http://microblog.omegalabs.io/v2"
 tags:
   - name: Posts
     description: Endpoints for accessing Posts business services.
+  - name: Users
+    description: Endpoints for accessing Users business services.
+  - name: Token
+    description: Endpoints for accessing token authentication services.
 paths:
   /posts:
     post:
       tags:
         - Posts
       summary: Create new post.
+      description: Create new Post document in the data store.
       operationId: createPost
       requestBody:
         description: New post document to add to the data store.
@@ -39,13 +45,21 @@ paths:
               $ref: "#/components/schemas/Post"
         required: true
       responses:
-        405:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+        "405":
           description: Method not allowed.
           content: {}
       security:
         - microblogservice_auth:
-            - create:any
-            - create:own
+            - "create:any"
+            - "create:own"
       x-codegen-request-body-name: body
     get:
       tags:
@@ -54,7 +68,7 @@ paths:
       description: Get all post documents from the data store.
       operationId: getAllPosts
       responses:
-        200:
+        "200":
           description: OK
           content:
             application/json:
@@ -62,18 +76,19 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Post"
-        400:
+        "400":
           description: Bad request
           content: {}
       security:
         - microblogservice_auth:
-            - read:any
-            - read:own
-  /posts/{id}:
+            - "read:any"
+            - "read:own"
+  "/posts/{id}":
     put:
       tags:
         - Posts
       summary: Update an existing post.
+      description: Updated a Post document in the data store.
       operationId: updatePost
       parameters:
         - name: id
@@ -90,19 +105,27 @@ paths:
               $ref: "#/components/schemas/Post"
         required: true
       responses:
-        400:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+        "400":
           description: Bad request
           content: {}
-        404:
+        "404":
           description: Not found
           content: {}
-        405:
+        "405":
           description: Method not allowed
           content: {}
       security:
         - microblogservice_auth:
-            - update:any
-            - update:own
+            - "update:any"
+            - "update:own"
       x-codegen-request-body-name: body
     get:
       tags:
@@ -118,7 +141,7 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        "200":
           description: OK
           content:
             application/json:
@@ -126,17 +149,18 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Post"
-        400:
+        "400":
           description: Bad request
           content: {}
       security:
         - microblogservice_auth:
-            - read:any
-            - read:own
+            - "read:any"
+            - "read:own"
     delete:
       tags:
         - Posts
       summary: Delete an existing post.
+      description: Delete a post document from the data store.
       operationId: deletePost
       parameters:
         - name: id
@@ -146,24 +170,28 @@ paths:
           schema:
             type: string
       responses:
-        400:
+        "200":
+          description: OK
+          content: {}
+        "400":
           description: Bad request
           content: {}
-        404:
+        "404":
           description: Not found
           content: {}
-        405:
+        "405":
           description: Method not allowed
           content: {}
       security:
         - microblogservice_auth:
-            - delete:any
+            - "delete:any"
       x-codegen-request-body-name: body
   /users:
     post:
       tags:
         - Users
       summary: Create new user.
+      description: Creat a new User document in the data store.
       operationId: createUser
       requestBody:
         description: New user document to add to the data store.
@@ -173,13 +201,21 @@ paths:
               $ref: "#/components/schemas/User"
         required: true
       responses:
-        405:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "405":
           description: Method not allowed.
           content: {}
       security:
         - microblogservice_auth:
-            - create:any
-            - create:own
+            - "create:any"
+            - "create:own"
       x-codegen-request-body-name: body
     get:
       tags:
@@ -188,7 +224,7 @@ paths:
       description: Get all user documents from the data store.
       operationId: getAllUsers
       responses:
-        200:
+        "200":
           description: OK
           content:
             application/json:
@@ -196,18 +232,19 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/User"
-        400:
+        "400":
           description: Bad request
           content: {}
       security:
         - microblogservice_auth:
-            - read:any
-            - read:own
-  /users/{id}:
+            - "read:any"
+            - "read:own"
+  "/users/{id}":
     put:
       tags:
         - Users
       summary: Update an existing user.
+      description: Update a User document in the data store.
       operationId: updateUser
       parameters:
         - name: id
@@ -224,19 +261,27 @@ paths:
               $ref: "#/components/schemas/User"
         required: true
       responses:
-        400:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "400":
           description: Bad request
           content: {}
-        404:
+        "404":
           description: Not found
           content: {}
-        405:
+        "405":
           description: Method not allowed
           content: {}
       security:
         - microblogservice_auth:
-            - update:any
-            - update:own
+            - "update:any"
+            - "update:own"
       x-codegen-request-body-name: body
     get:
       tags:
@@ -252,52 +297,57 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Post"
-        400:
+                  $ref: "#/components/schemas/User"
+        "400":
           description: Bad request
           content: {}
       security:
         - microblogservice_auth:
-            - read:any
-            - read:own
+            - "read:any"
+            - "read:own"
     delete:
       tags:
         - Users
-      summary: Delete an existing user.
+      summary: Delete an existing User.
+      description: Delete a single User document by its UUID.
       operationId: deleteUser
       parameters:
         - name: id
           in: path
-          description: Unique identifier for a single beer document.
+          description: Unique identifier for a single User document.
           required: true
           schema:
             type: string
       responses:
-        400:
+        "200":
+          description: OK
+          content: {}
+        "400":
           description: Bad request
           content: {}
-        404:
+        "404":
           description: Not found
           content: {}
-        405:
+        "405":
           description: Method not allowed
           content: {}
       security:
         - microblogservice_auth:
-            - delete:any
+            - "delete:any"
       x-codegen-request-body-name: body
   /token:
     post:
       tags:
         - Token
       summary: Create new authentication token.
+      description: Create a new authentication token.
       operationId: createToken
       requestBody:
         description: Create a new authentication token for authorizing API requests.
@@ -317,9 +367,9 @@ paths:
                   example: te$$er@ct
         required: true
       responses:
-        200:
+        "200":
           $ref: "#/components/schemas/Token"
-        500:
+        "500":
           description: Server Error
           content: {}
       x-codegen-request-body-name: body
@@ -334,7 +384,7 @@ components:
           type: string
           format: uuid
           readOnly: true
-          example: "5dcae1b4c5459371c20c0778"
+          example: 4190165e-6c2f-4a4c-80da-d9d1a4ffd7d7
         body:
           type: string
           example: The quick brown fox jumps over the lazy dog.
@@ -348,7 +398,7 @@ components:
           type: string
           format: uuid
           readOnly: true
-          example: "5dcae1b4c5459371c20c0778"
+          example: 4190165e-6c2f-4a4c-80da-d9d1a4ffd7d7
         _createdAt:
           type: string
           example: "2020-02-25T16:10:32.000Z"
@@ -385,10 +435,10 @@ components:
       type: oauth2
       flows:
         implicit:
-          authorizationUrl: http://petstore.swagger.io/oauth/dialog
+          authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
           scopes:
-            write:beers: modify beers in your account
-            read:beers: read your beers
+            "write:beers": modify beers in your account
+            "read:beers": read your beers
     api_key:
       type: apiKey
       name: api_key

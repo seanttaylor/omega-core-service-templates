@@ -25,7 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "1.9.1",
     "node-fetch": "2.6.0",
-    "omega-repo-json": "^1.1.0"
+    "@omegalabs/repo-json": "^1.1.0"
   },
   "devDependencies": {
     "eslint": "^6.7.2",

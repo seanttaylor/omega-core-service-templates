@@ -47,20 +47,20 @@ output "git_commit_sha" {
   value = data.environment_variable.git_commit_sha.value
 }
 
-resource "aws_ecs_cluster" "smbs-api" {
-  name = "smbs-api"
+resource "aws_ecs_cluster" "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}" {
+  name = "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}"
 }
 
 # Configuration for Cloudwatch Logs
-resource "aws_cloudwatch_log_group" "smbs-api" {
-  name = "/ecs/smbs-api"
+resource "aws_cloudwatch_log_group" "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}" {
+  name = "/ecs/{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}"
 }
 
 # ecs.tf
-resource "aws_ecs_service" "smbs-api" {
-  name            = "smbs-api"
-  task_definition = "${aws_ecs_task_definition.smbs-api.family}:${aws_ecs_task_definition.smbs-api.revision}"
-  cluster         = "${aws_ecs_cluster.smbs-api.id}"
+resource "aws_ecs_service" "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}" {
+  name            = "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}"
+  task_definition = "${aws_ecs_task_definition.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}.family}:${aws_ecs_task_definition.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}.revision}"
+  cluster         = "${aws_ecs_cluster.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}.id}"
   launch_type     = "FARGATE"
   desired_count   = 1
 
@@ -78,8 +78,8 @@ resource "aws_ecs_service" "smbs-api" {
   }
 
   load_balancer {
-    target_group_arn = "${aws_lb_target_group.smbs-api.arn}"
-    container_name   = "smbs-api"
+    target_group_arn = "${aws_lb_target_group.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}.arn}"
+    container_name   = "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}"
     container_port   = "8080"
   }
 }
@@ -88,15 +88,15 @@ resource "aws_ecs_service" "smbs-api" {
 # If the service decides it needs more capacity,
 # this task definition provides a blueprint for building an identical container.
 #
-resource "aws_ecs_task_definition" "smbs-api" {
-  family = "smbs-api"
-  execution_role_arn = "${aws_iam_role.smbs-api-task-execution-role.arn}"
+resource "aws_ecs_task_definition" "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}" {
+  family = "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}"
+  execution_role_arn = "${aws_iam_role.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}-task-execution-role.arn}"
 
   container_definitions = <<EOF
   [
     {
-      "name": "smbs-api",
-      "image": "${var.aws_ecr_id}.dkr.ecr.us-east-1.amazonaws.com/simple-microblog-service:${substr(data.environment_variable.git_commit_sha.value, 0, 7)}",
+      "name": "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}",
+      "image": "${var.aws_ecr_id}.dkr.ecr.us-east-1.amazonaws.com/{{@root.swagger.info.x-application-config.aws.ecr-repository-name}}:${substr(data.environment_variable.git_commit_sha.value, 0, 7)}",
       "portMappings": [
         {
           "containerPort": 8080
@@ -106,7 +106,7 @@ resource "aws_ecs_task_definition" "smbs-api" {
         "logDriver": "awslogs",
         "options": {
           "awslogs-region": "us-east-1",
-          "awslogs-group": "/ecs/smbs-api",
+          "awslogs-group": "/ecs/{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}",
           "awslogs-stream-prefix": "ecs"
         }
       }
@@ -123,8 +123,8 @@ resource "aws_ecs_task_definition" "smbs-api" {
   network_mode = "awsvpc"
 }
 
-resource "aws_lb_target_group" "smbs-api" {
-  name = "smbs-api"
+resource "aws_lb_target_group" "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}" {
+  name = "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}"
   port = 8080
   protocol = "HTTP"
   target_type = "ip"
@@ -136,12 +136,12 @@ resource "aws_lb_target_group" "smbs-api" {
   }
 
   depends_on = [
-    "aws_alb.smbs-api"
+    "aws_alb.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}"
   ]
 }
 
-resource "aws_alb" "smbs-api" {
-  name = "smbs-api-lb"
+resource "aws_alb" "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}" {
+  name = "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}-lb"
   internal = false
   load_balancer_type = "application"
 
@@ -159,19 +159,19 @@ resource "aws_alb" "smbs-api" {
   depends_on = ["aws_internet_gateway.igw"]
 }
 
-resource "aws_alb_listener" "smbs-api-http" {
-  load_balancer_arn = "${aws_alb.smbs-api.arn}"
+resource "aws_alb_listener" "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}-http" {
+  load_balancer_arn = "${aws_alb.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}.arn}"
   port = "80"
   protocol = "HTTP"
 
   default_action {
     type = "forward"
-    target_group_arn = "${aws_lb_target_group.smbs-api.arn}"
+    target_group_arn = "${aws_lb_target_group.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}.arn}"
   }
 }
 
 output "alb_url" {
-  value = "http://${aws_alb.smbs-api.dns_name}"
+  value = "http://${aws_alb.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}.dns_name}"
 }
 
 # This is the role under which ECS will execute our task. This role becomes more important
@@ -179,8 +179,8 @@ output "alb_url" {
 
 # The assume_role_policy field works with the following aws_iam_policy_document to allow
 # ECS tasks to assume this role we're creating.
-resource "aws_iam_role" "smbs-api-task-execution-role" {
-  name = "smbs-api-task-execution-role"
+resource "aws_iam_role" "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}-task-execution-role" {
+  name = "{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}-task-execution-role"
   assume_role_policy = "${data.aws_iam_policy_document.ecs-task-assume-role.json}"
 }
 
@@ -203,7 +203,7 @@ data "aws_iam_policy" "ecs-task-execution-role" {
 
 # Attach the above policy to the execution role.
 resource "aws_iam_role_policy_attachment" "ecs-task-execution-role" {
-  role = "${aws_iam_role.smbs-api-task-execution-role.name}"
+  role = "${aws_iam_role.{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}-task-execution-role.name}"
   policy_arn = "${data.aws_iam_policy.ecs-task-execution-role.arn}"
 }
   

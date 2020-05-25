@@ -1,12 +1,10 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://{{@root.swagger.info.x-snc-template-config.service.name}}.com/schemas/{{operation_name}}.json",
+  "$id": "http://{{@root.swagger.info.x-application-config.aws.ecs-service-slug}}.com/schemas/{{operation_name}}.json",
   "type": "object",
   "description": "The {{operation_name}} Schema description.",
   "required": [],
   "additionalProperties": false,
-  "properties": {
-   
-  }
+  "properties": {}
 }

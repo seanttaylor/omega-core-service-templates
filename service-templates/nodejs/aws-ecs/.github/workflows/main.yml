@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  build-test-push:
-    name: build-test-push
+  build-and-push:
+    name: build-and-push
     runs-on: ubuntu-latest
     steps:
       - name: "[STEP] Checkout"
