@@ -15,7 +15,7 @@ We save developer time by reducing the effort required to scaffold a project. Ge
 
 #### Business Rationale
 
-Prototyping quickly and delivering features are critical functions of engineering teams. Providing the ability to experiment and validate ideas is among the most important value propositions of a software developers within an organization.
+Prototyping quickly and delivering features are critical functions of engineering teams. Providing the ability to experiment and validate ideas is among the most important value propositions of a software developer within an organization.
 
 Allowing developers to stamp out code, prototypes and features means time savings, money savings and the most valuable direction of technical resources possible.
 
@@ -30,12 +30,18 @@ To generate project scaffolding do:
 
 ##### Notes
 
+###### Generating Code
+
 In addition to the below, more documentation is available in the `swagger-node-codegen` documentation.
 
 * Only the path to the specification file is required in order to generate scaffolding.
 * Specification file may be in *.yaml or *.json format
 * If NO output directory is specified, code is output to the current directory.
 * If NO template directory is specified, code will be output using the default template provided by the `swagger-node-codegen` package.
+* Sometimes the code generation can **FAIL** unexpectedly this is most often because:
+  * There is an error in the swagger specification file
+  * On MacOS the `.DS_Store` file is causing an error compiling the template output. Try deleting `.DS_Store` in the directory containing the template and running the generator again
+
 
 
 

@@ -1,3 +1,5 @@
+# Find out more about this configuration in the following Fargate/Terraform tutorial: https://section411.com/2019/07/hello-world/
+
 variable "access_key" {
   type        = string
   description = "AWS Access Key ID"
