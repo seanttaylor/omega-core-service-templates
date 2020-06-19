@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
-const requestContext = require('../lib/middleware/request-context.middleware.js');
+const requestContext = require('./src/lib/middleware/request-context.middleware.js');
 const app = express();
 
 app.use(cors());
@@ -17,9 +17,9 @@ app.use(requestContext);
  */
 {{#each @root.swagger.endpoints}}
 {{#endsWith @root.swagger.basePath '/'}}
-app.use('{{@root.swagger.basePath}}{{..}}', require('./routes/{{..}}.route.js'));
+app.use('{{@root.swagger.basePath}}{{..}}', require('./src/api/routes/{{..}}.route.js'));
 {{else}}
-app.use('{{@root.swagger.basePath}}/{{..}}', require('./routes/{{..}}.route.js'));
+app.use('{{@root.swagger.basePath}}/{{..}}', require('./src/api/routes/{{..}}.route.js'));
 {{/endsWith}}
 {{/each}}
 
