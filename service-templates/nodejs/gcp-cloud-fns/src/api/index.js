@@ -1,4 +1,4 @@
-const serverless = require('serverless-http');
+const functions = require("firebase-functions");
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -38,4 +38,4 @@ app.use((err, req, res, next) => {
   res.status(status).send({ status, error: "There was an error."});
 });
 
-module.exports.handler = serverless(app);
+module.exports.api = functions.https.onRequest(app);
