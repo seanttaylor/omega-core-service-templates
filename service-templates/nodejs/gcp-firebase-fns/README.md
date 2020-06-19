@@ -1,4 +1,4 @@
-### Omega Framework ~ Google Cloud Functions Template
+### Omega Framework ~ Google (Cloud) Firebase Functions Template
 
 
 #### Technical Rationale
@@ -14,4 +14,4 @@
 
 * Documentation on Github Workflows [here](https://help.github.com/en/actions).
 
-* Documentation on the Serverless Framework CLI commands [here](https://serverless.com/framework/docs/providers/).
+* Documentation on the Firebase CLI commands [here](https://firebase.google.com/docs/cli).
