@@ -40,7 +40,8 @@ In addition to the below, more documentation is available in the `swagger-node-c
 * If NO template directory is specified, code will be output using the default template provided by the `swagger-node-codegen` package.
 * Sometimes the code generation can **FAIL** unexpectedly this is most often because:
   * There is an error in the swagger specification file
-  * On MacOS the `.DS_Store` file is causing an error compiling the template output. Try deleting `.DS_Store` in the directory containing the template and running the generator again
+  * On MacOS the `.DS_Store` file is causing an error compiling the template output. Try deleting `.DS_Store` in the top-level directory containing the template (**as well as** all subdirectories.) Try running the generator again.
+  * Here is a bash command to recursively remove all `.DS_Store` files from template directories: `find . -name '.DS_Store' -type f -delete`
 
 
 

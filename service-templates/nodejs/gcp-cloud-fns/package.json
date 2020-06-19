@@ -1,0 +1,21 @@
+{
+  "name": "{{swagger.info.x-application-config.service.name}}",
+  "version": "1.0.0",
+  "description": "{{swagger.info.description}}",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@omegalabs/repo-json": "^1.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "serverless-http": "^2.3.2"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.1.2"
+  }
+}
