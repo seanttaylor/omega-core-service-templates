@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@omegalabs/repo-json": "^1.1.0",
+    "ajv": "^6.12.2",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
