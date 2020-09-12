@@ -24,7 +24,7 @@
     "helmet": "3.21.2",
     "jsonwebtoken": "^8.5.1",
     "morgan": "1.9.1",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.1",
     "@omegalabs/repo-json": "^1.1.0"
   },
   "devDependencies": {
