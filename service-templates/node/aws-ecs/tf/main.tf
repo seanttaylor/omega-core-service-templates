@@ -26,7 +26,8 @@ provider "aws" {
 
 provider "environment" {
   #Custom "utility provider REQUIRED for including local environment variables automatically #injected in Terraform Cloud workers as part of a Terraform configuration.
-  #See README.md for more details.
+  # You MUST include the terraform provider file in `/tf/.terraform/plugins/linux_amd64`
+  # folder for this utility provider to work 
 }
 
 data "environment_variable" "git_branch_name" {
