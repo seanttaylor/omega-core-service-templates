@@ -18,7 +18,8 @@ services:
   api:
     depends_on:
       - db
-    image: rest-o-matic:mysql-0.0.1
+    build:
+      context: .
     command: xmysql -h db -u root -p root -d fontina -r 0.0.0.0
     networks:
       - shared_network

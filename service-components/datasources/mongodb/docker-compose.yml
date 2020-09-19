@@ -1,4 +1,3 @@
-  
 version: "3"
 
 ### Creates a named network with the default bridge driver
@@ -6,36 +5,36 @@ version: "3"
 # See: https://docs.docker.com/engine/userguide/networking/dockernetworks/
 # See: https://docs.docker.com/engine/reference/commandline/network_create/
 networks:
-   restheart-backend:
+    restheart-backend:
 
 ### Create a permanent, named data volume
 # This makes much easier to identify where the mongodb data is stored on host
 # See: https://docs.docker.com/engine/userguide/containers/dockervolumes/#mount-a-shared-storage-volume-as-a-data-volume
 volumes:
-   restheart-mongo-volume:
+    restheart-mongo-volume:
 
 services:
     restheart:
         # image: softinstigate/restheart:5.1.1
-        image: rest-o-matic:mongodb-0.0.1
+        build:
+            context: .
         container_name: restheart
         #environment:
         # FOR A *LOCAL* INSTANCE OF MONGO USE URI BELOW \\ **COMMENT IN mongodb AND mongodb:initiate SERVICES**
         # MONGO_URI: mongodb://restheart:R3ste4rt!@restheart-mongo
-        # 
+        #
         # FOR A *REMOTE* INSTANCE OF MONGO USE URI TEMPLATE BELOW \\ **COMMENT OUT mongodb AND mongodb:initiate SERVICES**
         # MONGO_URI: mongodb+srv://<dbuser>:<password>@<dbhost>/<dbname>?retryWrites=true&w=majority
         # command: ["--envFile", "/opt/restheart/etc/default.properties"]
-       # depends_on:
-       #     - mongodb
-       # volumes:
+        # depends_on:
+        #     - mongodb
+        # volumes:
         # MOUNT HERE FOR A CUSTOMIZED RESTHEART CONFIGURATION OTHERWISE REMOVE volumes KEY FOR DEFAULT CONFIG
         #    - ./custom.properties:/opt/restheart/etc/default.properties
         networks:
             - restheart-backend
         ports:
             - "8080:8080"
-
     #mongodb:
     #    image: mongo:4.2
     #    container_name: restheart-mongo
