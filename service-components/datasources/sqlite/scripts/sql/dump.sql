@@ -1,0 +1,1 @@
+CREATE TABLE default_table (item VARCHAR(255), kind VARCHAR(255), _id VARCHAR(255), _createdAt VARCHAR(255), _lastModified VARCHAR(255) DEFAULT NULL);

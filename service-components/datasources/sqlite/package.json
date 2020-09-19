@@ -1,0 +1,17 @@
+{
+  "name": "@omegalabs/repo-sqlite",
+  "version": "1.0.0",
+  "description": "A SQLite3 implementation for the Repository pattern for data persistence.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Sean Travis Taylor",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "dependencies": {
+    "sqlite3": "^4.1.1"
+  }
+}
