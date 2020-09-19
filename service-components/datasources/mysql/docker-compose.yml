@@ -1,0 +1,28 @@
+version: "3.1"
+
+services:
+  db:
+    image: mysql:5.7
+    command: --init-file /docker-entrypoint.initdb.d/fontina.sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_DATABASE: fontina
+    volumes:
+      - ./sqls:/docker-entrypoint.initdb.d
+    networks:
+      - shared_network
+    ports:
+      - "3306:3306"
+  api:
+    depends_on:
+      - db
+    image: rest-o-matic:mysql-0.0.1
+    command: xmysql -h db -u root -p root -d fontina -r 0.0.0.0
+    networks:
+      - shared_network
+    ports:
+      - "3000:3000"
+networks:
+  shared_network:
